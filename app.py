@@ -103,7 +103,7 @@ def add_member():
     if not session.get("admin"): return redirect(url_for("admin"))
     with engine.begin() as con:
         con.execute(text("""INSERT INTO members(name,role,secret_code,secret_name)
-                            VALUES(:name,:role,:code,:special_name)"""), {
+                            VALUES(:name,:role,:secret_code,:secret_name)"""), {
             "name": request.form["name"], "role": request.form["role"],
             "secret_code": request.form.get("secret_code",""),
             "secret_name": request.form.get("secret_name","")})
