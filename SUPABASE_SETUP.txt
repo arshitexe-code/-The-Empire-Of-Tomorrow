@@ -1,0 +1,17 @@
+SUPABASE SETUP FOR EMPIRE OF TOMORROW
+
+1. Your existing members table should have: id, name, role, secret_name, secret_code, created_at.
+2. In Supabase SQL Editor, run:
+
+CREATE TABLE IF NOT EXISTS announcements (
+  id BIGSERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  body TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  pinned INTEGER DEFAULT 0
+);
+
+3. In Supabase Dashboard click Connect and copy the Session pooler connection string (port 5432). Replace [YOUR-PASSWORD] with the database password. Render is IPv4-only, so Session pooler is the appropriate choice.
+4. In Render, open the service -> Environment -> add DATABASE_URL with that connection string. Keep it secret.
+5. Keep SECRET_KEY and ADMIN_PASSWORD_HASH as existing Render environment variables.
+6. Deploy this project. The Flask app will use Supabase Postgres when DATABASE_URL is present.

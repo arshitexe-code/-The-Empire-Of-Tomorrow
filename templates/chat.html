@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Members' Chat · Empire of Tomorrow</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<nav><div class="navin"><a class="brand" href="/"><span></span>Empire of Tomorrow</a><div class="links"><a href="/">Announcements</a><a href="/members">Members</a><a href="/rules">Rules</a><a href="/cards-ranks">Cards & Ranks</a><a href="/about-us">About Us</a><a href="/oath">Oath</a><a href="/chat">💬 Chat</a></div></div></nav>
+<main class="chat-page">
+  <div class="chat-header">
+    <div><div class="eyebrow">Private Members Area</div><h1>Empire Members Chat</h1></div>
+    {% if not show_login %}<form method="post" action="/chat/logout"><button class="btn secondary" type="submit">Log out</button></form>{% endif %}
+  </div>
+
+  {% if show_login %}
+  <div class="chat-login-card">
+    <div class="eyebrow">Members only</div>
+    <h2>Enter the chat</h2>
+    <p>Enter your member details and the shared member password. This popup appears only until this browser is authenticated.</p>
+    {% if login_error %}<div class="chat-error">{{ login_error }}</div>{% endif %}
+    <form class="form" method="post" action="/chat">
+      <input name="member_name" placeholder="Member name" autocomplete="name" required>
+      <input name="secret_name" placeholder="Secret name" required>
+      <input name="secret_code" placeholder="Secret code" required>
+      <input type="password" name="password" placeholder="Shared password" autocomplete="current-password" required>
+      <button class="btn" type="submit">Enter Chat</button>
+    </form>
+  </div>
+  {% else %}
+  <section class="chat-shell">
+    <div id="chatMessages" class="chat-messages">
+      {% for m in messages %}
+      <div class="chat-row {% if m.member_id == session.get('member_id') %}mine{% endif %}">
+        <div class="chat-bubble">
+          <div class="chat-author">{{ m.member_name }}</div>
+          <div class="chat-text">{{ m.message }}</div>
+          <div class="chat-time">{{ m.created_at }}</div>
+        </div>
+      </div>
+      {% else %}<div class="chat-empty">No messages yet. Start the conversation.</div>{% endfor %}
+    </div>
+    <form id="chatForm" class="chat-compose">
+      <input id="messageInput" name="message" maxlength="2000" placeholder="Type a message..." autocomplete="off" required>
+      <button class="btn" type="submit">Send</button>
+    </form>
+  </section>
+  {% endif %}
+</main>
+<footer>The Empire of Tomorrow · Private Members Chat</footer>
+{% if not show_login %}
+<script>
+const box=document.getElementById('chatMessages');
+const form=document.getElementById('chatForm');
+const input=document.getElementById('messageInput');
+let lastSignature='';
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function render(messages){
+  const html=messages.map(m=>`<div class="chat-row ${Number(m.member_id)===Number({{ session.get('member_id')|tojson }})?'mine':''}"><div class="chat-bubble"><div class="chat-author">${esc(m.member_name)}</div><div class="chat-text">${esc(m.message)}</div><div class="chat-time">${esc(String(m.created_at))}</div></div></div>`).join('');
+  if(html!==box.dataset.html){const nearBottom=box.scrollHeight-box.scrollTop-box.clientHeight<120;box.innerHTML=html||'<div class="chat-empty">No messages yet. Start the conversation.</div>';box.dataset.html=html;if(nearBottom)box.scrollTop=box.scrollHeight;}
+}
+async function loadMessages(){try{const r=await fetch('/chat/messages',{cache:'no-store'});if(!r.ok)return;const data=await r.json();const sig=JSON.stringify(data.messages);if(sig!==lastSignature){lastSignature=sig;render(data.messages);}}catch(e){}}
+form.addEventListener('submit',async e=>{e.preventDefault();const message=input.value.trim();if(!message)return;input.disabled=true;try{const body=new URLSearchParams({message});const r=await fetch('/chat/send',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});if(r.ok){input.value='';await loadMessages();box.scrollTop=box.scrollHeight;}}finally{input.disabled=false;input.focus();}});
+box.scrollTop=box.scrollHeight;loadMessages();setInterval(loadMessages,2500);
+</script>
+{% endif %}
+</body>
+</html>
