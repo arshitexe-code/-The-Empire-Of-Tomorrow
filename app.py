@@ -57,7 +57,7 @@ def announcements():
     with engine.connect() as con:
         rows = con.execute(text("SELECT * FROM announcements ORDER BY pinned DESC, id DESC")).mappings().all()
         member_count = con.execute(text("SELECT COUNT(*) FROM members")).scalar_one()
-        leadership = con.execute(text("SELECT name, role FROM members WHERE lower(role) IN ('Group Leader') ORDER BY id")).mappings().all()
+        leadership = con.execute(text("SELECT name, role FROM members WHERE lower(role) IN ('group leader') ORDER BY id")).mappings().all()
     return render_template("announcements.html", announcements=rows, member_count=member_count, leadership=leadership)
 
 @app.route("/dashboard")
