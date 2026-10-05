@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Oath · Empire of Tomorrow</title>
+  <link rel="stylesheet" href="/static/style.css">
+<link rel="icon" type="image/png" href="/static/favicon.png">
+<meta name="theme-color" content="#0b1020">
+  <style>
+    .oath-page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+      text-align: center;
+    }
+    .oath-art {
+      display: block;
+      width: 100%;
+      max-width: 1100px;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.35);
+    }
+  </style>
+</head>
+<body>
+<div id="pageLoader" class="page-loader" aria-hidden="true"><div class="loader-mark"><span></span></div><div>Empire of Tomorrow</div></div>
+  <nav class="site-nav"><div class="navin"><a class="brand" href="/"><span></span>Empire of Tomorrow</a><button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="siteLinks">☰</button><div class="links" id="siteLinks"><a href="/">Announcements</a><a href="/members">Members</a><a href="/rules">Rules</a><a href="/cards-ranks">Cards & Ranks</a><a href="/about-us">About Us</a><a href="/oath">Oath</a><a href="/chat">💬 Chat</a></div></div></nav>
+
+  <main class="oath-page">
+    <img class="oath-art" src="/static/oath.png" alt="The Empire of Tomorrow Oath">
+  </main>
+
+  <footer>The Empire of Tomorrow · Built for the group<span class="footer-updated"> · Last updated: {{ site_last_updated }}</span></footer>
+<script>
+(function(){
+  const loader=document.getElementById('pageLoader');
+  window.addEventListener('load',()=>setTimeout(()=>loader&&loader.classList.add('hidden'),180));
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a');
+    if(!a || a.target==='_blank' || a.origin!==location.origin || !a.href || a.href.includes('#')) return;
+    if(loader){ e.preventDefault(); loader.classList.remove('hidden'); setTimeout(()=>location.href=a.href,160); }
+  });
+  const btn=document.querySelector('.menu-toggle'), links=document.getElementById('siteLinks');
+  if(btn&&links){ btn.addEventListener('click',()=>{ const open=links.classList.toggle('open'); btn.setAttribute('aria-expanded',open?'true':'false'); btn.setAttribute('aria-label',open?'Close navigation':'Open navigation'); }); links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');btn.setAttribute('aria-expanded','false');})); }
+})();
+</script>
+</body>
+</html>

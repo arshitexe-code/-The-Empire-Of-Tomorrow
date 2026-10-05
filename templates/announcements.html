@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Home · The Empire of Tomorrow{% endblock %}
+{% block content %}
+<section class="hero hero-home wrap">
+  <div class="hero-copy">
+    <div class="eyebrow">THE EMPIRE OF TOMORROW</div>
+    <h1>BUILD. LEAD. <span>CREATE.</span></h1>
+    <p class="hero-lead">People united by purpose, discipline and the ambition to build a brighter tomorrow together.</p>
+    <div class="hero-actions"><a class="btn gold" href="#announcements">Enter the Empire</a><a class="btn ghost" href="/oath">Read the Oath</a></div>
+  </div>
+  <div class="hero-emblem"><img src="{{ url_for('static', filename='favicon.png') }}" alt="Empire of Tomorrow emblem"></div>
+</section>
+
+<section class="wrap stats-strip">
+  <div class="stat"><strong>{{ member_count }}</strong><span>Members</span></div>
+  <div class="stat"><strong>{{ leadership|length }}</strong><span>Leadership</span></div>
+  <div class="stat"><strong>{{ announcements|length }}</strong><span>Announcements</span></div>
+</section>
+
+<section id="announcements" class="wrap">
+  <div class="section-heading"><div><div class="eyebrow">THE NOTICE BOARD</div><h2>Latest Announcements</h2></div><a class="text-link" href="/admin">Admin</a></div>
+  {% if announcements %}
+    <article class="featured-announcement">
+      <div><span class="tag {% if announcements[0].pinned %}pin{% endif %}">{% if announcements[0].pinned %}PINNED{% else %}LATEST{% endif %}</span><h3>{{ announcements[0].title }}</h3><p>{{ announcements[0].body }}</p><small>{{ announcements[0].created_at }}</small></div>
+    </article>
+    {% if announcements|length > 1 %}<div class="announcement-list">{% for a in announcements[1:] %}<article class="announcement-row"><div><span class="tag {% if a.pinned %}pin{% endif %}">{% if a.pinned %}PINNED{% else %}UPDATE{% endif %}</span><h3>{{ a.title }}</h3><p>{{ a.body }}</p></div><time>{{ a.created_at }}</time></article>{% endfor %}</div>{% endif %}
+  {% else %}
+    <div class="empty-state"><span>✦</span><h3>The board is quiet.</h3><p>No announcements have been published yet.</p></div>
+  {% endif %}
+</section>
+
+<section class="wrap home-grid">
+  <article class="portal-panel"><div class="eyebrow">LEADERSHIP</div><h2>Current Leadership</h2>{% if leadership %}<ul class="leader-list">{% for m in leadership %}<li><span class="initial">{{ m.name[:1]|upper }}</span><div><strong>{{ m.name }}</strong><small>{{ m.role }}</small></div></li>{% endfor %}</ul>{% else %}<p>No leadership roles have been added yet.</p>{% endif %}</article>
+  <article class="portal-panel"><div class="eyebrow">QUICK ACCESS</div><h2>Explore the Empire</h2><div class="quick-links"><a href="/members">👥 <span>Members</span></a><a href="/rules">📜 <span>Rules & Regulations</span></a><a href="/cards-ranks">🃏 <span>Cards & Ranks</span></a><a href="/chat">💬 <span>Members' Chat</span></a></div></article>
+  <article class="portal-panel motto-panel"><div class="eyebrow">OUR MOTTO</div><blockquote>“People · Purpose · A Brighter Tomorrow”</blockquote><a class="text-link" href="/oath">View the Oath →</a></article>
+</section>
+{% endblock %}

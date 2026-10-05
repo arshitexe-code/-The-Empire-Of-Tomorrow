@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Admin Login · The Empire of Tomorrow{% endblock %}
+{% block content %}<section class="wrap"><div class="chat-login-card"><div class="eyebrow">PRIVATE AREA</div><h1>Admin Login</h1><p>Only the administrator can manage the site.</p>{% with messages=get_flashed_messages() %}{% for m in messages %}<div class="chat-error">{{m}}</div>{% endfor %}{% endwith %}<form class="form" method="post"><input type="password" name="password" placeholder="Admin password" required><button class="btn gold">Sign in</button></form></div></section>{% endblock %}

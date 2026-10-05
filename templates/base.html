@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080d18">
+  <meta name="description" content="The Empire of Tomorrow · People · Purpose · A Brighter Tomorrow">
+  <title>{% block title %}The Empire of Tomorrow{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div id="pageLoader" class="page-loader" aria-hidden="true">
+    <div class="loader-emblem"><img src="{{ url_for('static', filename='favicon.png') }}" alt=""></div>
+    <div>THE EMPIRE OF TOMORROW</div>
+  </div>
+
+  <nav class="site-nav">
+    <div class="navin">
+      <a class="brand" href="{{ url_for('announcements') }}">
+        <img src="{{ url_for('static', filename='favicon.png') }}" alt="Empire emblem">
+        <span><strong>EMPIRE OF TOMORROW</strong><small>PEOPLE · PURPOSE · PROGRESS</small></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="siteLinks">☰</button>
+      <div class="links" id="siteLinks">
+        <a href="/">Home</a>
+        <a href="/members">Members</a>
+        <a href="/rules">Rules</a>
+        <a href="/cards-ranks">Cards & Ranks</a>
+        <a href="/about-us">About Us</a>
+        <a href="/oath">Oath</a>
+        <a class="nav-chat" href="/chat">💬 Chat</a>
+        {% if member_logged_in %}<a class="nav-dashboard" href="/dashboard">Dashboard</a>{% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <main class="site-main">{% block content %}{% endblock %}</main>
+
+  <footer>
+    <div class="footer-brand">THE EMPIRE OF TOMORROW</div>
+    <div>PEOPLE · PURPOSE · A BRIGHTER TOMORROW</div>
+    <span class="footer-updated">Last updated: {{ site_last_updated }}</span>
+  </footer>
+
+  <script>
+  (() => {
+    const loader = document.getElementById('pageLoader');
+    window.addEventListener('load', () => setTimeout(() => loader?.classList.add('hidden'), 220));
+    const btn = document.querySelector('.menu-toggle');
+    const links = document.getElementById('siteLinks');
+    if (btn && links) {
+      btn.addEventListener('click', () => {
+        const open = links.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+      });
+      links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        links.classList.remove('open'); btn.setAttribute('aria-expanded', 'false');
+      }));
+    }
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a');
+      if (!a || a.target === '_blank' || a.origin !== location.origin || a.href.includes('#')) return;
+      if (loader) { e.preventDefault(); loader.classList.remove('hidden'); setTimeout(() => location.href = a.href, 150); }
+    });
+  })();
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

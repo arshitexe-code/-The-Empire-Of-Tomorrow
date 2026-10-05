@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Member Dashboard · The Empire of Tomorrow{% endblock %}
+{% block content %}
+<section class="wrap dashboard-page">
+  <div class="hero compact"><div class="eyebrow">PRIVATE MEMBER PORTAL</div><h1>Welcome, {{ member_name }}.</h1><p>Your Empire dashboard. Everything important, without making you hunt through seven menus like a medieval quest.</p></div>
+  <div class="dashboard-grid">
+    <a class="dashboard-tile featured" href="/chat"><span>💬</span><div><strong>Members' Chat</strong><small>Enter the private conversation</small></div>→</a>
+    <a class="dashboard-tile" href="/"><span>📢</span><div><strong>Announcements</strong><small>Read the latest updates</small></div>→</a>
+    <a class="dashboard-tile" href="/members"><span>👥</span><div><strong>Members</strong><small>View the member directory</small></div>→</a>
+    <a class="dashboard-tile" href="/rules"><span>📜</span><div><strong>Rules</strong><small>Review the constitution</small></div>→</a>
+  </div>
+</section>
+{% endblock %}

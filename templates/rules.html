@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Rules & Regulations · The Empire of Tomorrow{% endblock %}
+{% block content %}
+<section class="wrap"><div class="hero compact"><div class="eyebrow">THE CONSTITUTION</div><h1>Rules & Regulations</h1><p>Discipline today, a brighter tomorrow. Tap a rule to expand it.</p></div>
+<div class="rules-grid">
+{% set rules = [
+('Role Change','If anyone wants to shift their roles, they have to get approval from the manager and the leader.'),
+('Voting','Voting for any change in the group, whether online or offline. <strong>Maturity wins.</strong>'),
+('Sit Together','Every member of the group should sit close to each other in the class.'),
+('PR Plans','The PR plans of the group will be made by the leader and the manager.'),
+('Leaving the Group','If anyone wants to leave the group, they have to give their resignation letter to the manager, which will then be approved by the leader.'),
+('No Discrimination','There will be no discrimination.'),
+('New Members','If anyone wants to become a member of the group, he has to sign a form and give a test.'),
+('Republic','This group is a republic. The staff is the service provider, not the kings. <strong>Service, not power.</strong>'),
+('Special Code','Each member will have a special code, both in numbers and names.'),
+('Learning & Service','This group is made for learning and serving. If anyone bothers you in a bad way, be free to tell the staff. Action would be taken instantly.'),
+('No Fights',"There will be no fights. Whoever does fights will be kicked out of this group. <strong>This is not applicable for debates.</strong>"),
+('No Dictatorship',"Any type of dictatorship by anyone won't be tolerated."),
+('Confidentiality','Confidential data can only be shared to higher posts in the staff, like the manager, leader and the rest of the PR team, because of privacy purposes.'),
+('No Bullying','If anyone bullies someone inside or outside the group based on marks, academic performances, superior role in the group, etc., he can be suspended by the authorities for several days (max. 20 days). The suspension duration will vary based on the person’s actions. The manager, leader, and both admins will decide the decision.'),
+('No Supporting Suspended Members','If anyone tries to add a suspended person without permission, a suspension letter for them can also be issued by the admins and group leader, as they will be supporting the culprit.'),
+('Yellow & Blue Card','A member who does not follow the rules can be given a yellow card or a blue card. This may vary based on the frequency of the crime. <strong>Blue card &gt; yellow card.</strong> If a person is given two yellow cards, he would be given a blue card. If a person is given a blue card, he would be suspended.')
+] %}
+{% for title, body in rules %}<details class="rule-card"><summary><span class="rule-number">{{ loop.index }}</span><span><b>{{ title }}</b><small>Tap to read</small></span><i>+</i></summary><div class="rule-body">{{ body|safe }}</div></details>{% endfor %}
+</div></section>
+{% endblock %}

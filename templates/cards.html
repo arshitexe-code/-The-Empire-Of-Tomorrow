@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Cards & Ranks · The Empire of Tomorrow{% endblock %}
+{% block content %}
+<section class="wrap"><div class="hero compact"><div class="eyebrow">STATUS SYSTEM</div><h1>Cards & Ranks</h1><p>Open a card to see what it means.</p></div>
+<div class="card-system">
+<details class="status-card yellow"><summary><span class="status-icon">■</span><span><b>YELLOW CARD</b><small>Warning</small></span><i>+</i></summary><div><h3>Three strikes</h3><p>Three yellow cards result in suspension.</p></div></details>
+<details class="status-card blue"><summary><span class="status-icon">■</span><span><b>BLUE CARD</b><small>Direct suspension</small></span><i>+</i></summary><div><h3>Serious violation</h3><p>A blue card results in direct suspension.</p></div></details>
+<details class="status-card black"><summary><span class="status-icon">■</span><span><b>BLACK CARD</b><small>Ban</small></span><i>+</i></summary><div><h3>Permanent removal</h3><p>A black card results in permanent removal.</p></div></details>
+<details class="status-card green"><summary><span class="status-icon">■</span><span><b>GREEN CARD</b><small>Promotion</small></span><i>+</i></summary><div><h3>Promotion</h3><p>A green card is awarded on promotion to a higher position.</p></div></details>
+</div></section>
+{% endblock %}

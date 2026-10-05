@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Members · The Empire of Tomorrow{% endblock %}
+{% block content %}
+<section class="wrap"><div class="hero compact"><div class="eyebrow">THE DIRECTORY</div><h1>Members</h1><p>The people who make up The Empire of Tomorrow.</p></div>
+<div class="member-list"><div class="member-list-head"><span>Name</span><span>Role</span></div>{% for m in members %}<div class="member-row"><div class="member-name"><span class="initial">{{ m.name[:1]|upper }}</span><strong>{{ m.name }}</strong></div><span class="role-badge">{{ m.role }}</span></div>{% else %}<div class="empty-state"><h3>No members yet.</h3></div>{% endfor %}</div></section>
+{% endblock %}
